@@ -1,0 +1,27 @@
+{
+  "name": "nexttutorial",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.3",
+    "mariadb": "^3.1.2",
+    "mongoose": "6.11.1",
+    "multer": "^1.4.5-lts.1",
+    "next": "13.4.3",
+    "next-auth": "^4.22.1",
+    "pg": "^8.11.0",
+    "pg-hstore": "^2.3.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sequelize": "^6.32.0",
+    "swr": "^2.1.5"
+  }
+}
