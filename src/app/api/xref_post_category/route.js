@@ -1,12 +1,5 @@
 import { NextResponse } from "next/server";
 import Xref_post_category from "@/models/Xref_post_category";
-// const upload = '../middleware/multer.js';
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
 
 export const POST = async (request) => {
    const xrefData = await request.json();
@@ -22,6 +15,10 @@ export const POST = async (request) => {
 export const PUT = async (request) => {
   const {post_id, old_post_id, category_id, old_category_id} = await request.json();
 
+//   const formData = await request.formData();
+//   const  { post_id, old_post_id, category_id, old_category_id } = Object.fromEntries(formData);
+// console.log('xxxxxxxxxxxxx', { post_id, old_post_id, category_id, old_category_id });
+
   try {
     const result = await Xref_post_category.update({post_id, category_id}, {
       where: { post_id: old_post_id, category_id: old_category_id },
@@ -32,5 +29,4 @@ export const PUT = async (request) => {
     return new NextResponse("Database Error", { status: 500 });
   }
 };
-
 
