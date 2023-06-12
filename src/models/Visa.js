@@ -13,7 +13,6 @@ const Visa = sequelize.define('Visa', {
     },
     desc: {
         type: DataTypes.TEXT,
-        allowNull: true,
     },
 });
 

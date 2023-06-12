@@ -13,16 +13,14 @@ const Currency = sequelize.define('Currency', {
     },
     name_plural: {
         type: DataTypes.STRING,
-        allowNull: true,
     },
     code: {
         type: DataTypes.CHAR(3),
-        allowNull: true,
+        allowNull: false,
         unique: true,
     },
     alias: {
         type: DataTypes.TEXT,
-        allowNull: true,
     },
 });
 

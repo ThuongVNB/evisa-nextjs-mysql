@@ -13,7 +13,6 @@ const Tag = sequelize.define('Tag', {
     },
     slug: {
         type: DataTypes.STRING,
-        allowNull: true,
         unique: true,
     },
 });

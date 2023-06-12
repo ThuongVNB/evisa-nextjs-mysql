@@ -13,16 +13,14 @@ const Country = sequelize.define('Country', {
     },
     code: {
         type: DataTypes.CHAR(2),
-        allowNull: true,
+        allowNull: false,
         unique: true,
     },
     alias: {
         type: DataTypes.TEXT,
-        allowNull: true,
     },
     desc: {
         type: DataTypes.TEXT,
-        allowNull: true,
     },
 });
 

@@ -44,7 +44,6 @@ const Visa_country_detail = sequelize.define('Visa_country_detail', {
     },
     requirement_desc: {
         type: DataTypes.TEXT,
-        allowNull: true,
     },
     currency: {
         type: DataTypes.INTEGER,
@@ -56,7 +55,7 @@ const Visa_country_detail = sequelize.define('Visa_country_detail', {
     },
     status: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        defaultValue: 0,
     },
 });
 
