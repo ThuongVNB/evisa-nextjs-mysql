@@ -31,9 +31,9 @@ const handler = NextAuth({
                                 },
                                 (err, token) => {
                                     user.token = 'Bearer ' + token;
-                                    return user;
                                 },
                             );
+                            return user;
                         } else {
                             throw new Error('Wrong Credentials!');
                         }
