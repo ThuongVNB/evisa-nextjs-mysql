@@ -3,7 +3,6 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '@/models/User';
-import connect from '@/utils/db';
 import bcrypt from 'bcryptjs';
 
 const handler = NextAuth({
@@ -13,8 +12,7 @@ const handler = NextAuth({
             name: 'Credentials',
             async authorize(credentials) {
                 //Check if the user exists.
-                await connect();
-
+                console.log('xxxxxxxxxxxxxxxxxxxxx', credentials);
                 try {
                     const user = await User.findOne({
                         email: credentials.email,

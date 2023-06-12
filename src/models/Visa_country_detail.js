@@ -53,9 +53,12 @@ const Visa_country_detail = sequelize.define('Visa_country_detail', {
             key: 'id',
         },
     },
-    status: {
+    published: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+        validate: {
+            isIn: [[0, 1]],
+        },
     },
 });
 

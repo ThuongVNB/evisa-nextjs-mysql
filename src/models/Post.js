@@ -55,6 +55,13 @@ const Post = sequelize.define('Post', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
+    published: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        validate: {
+            isIn: [[0, 1]],
+        },
+    },
 });
 
 (async () => {

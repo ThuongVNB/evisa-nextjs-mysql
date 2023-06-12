@@ -1,13 +1,20 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
 
-const User = sequelize.define('User', {
+export const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
+    first_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    middle_name: {
+        type: DataTypes.STRING,
+    },
+    last_name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -18,16 +25,53 @@ const User = sequelize.define('User', {
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false,
+    },
+    date_of_birth: {
+        type: 'TIMESTAMP',
+    },
+    phone_number: {
+        type: DataTypes.STRING,
+    },
+    role: {
+        type: DataTypes.INTEGER,
+    },
+    country_of_residence: {
+        type: DataTypes.INTEGER,
+    },
+    nationality: {
+        type: DataTypes.INTEGER,
+    },
+    oversea_family: {
+        type: DataTypes.BOOLEAN,
+    },
+    passport_expired_time: {
+        type: 'TIMESTAMP',
+    },
+    parent_user: {
+        type: DataTypes.INTEGER,
+    },
+    gender: {
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+        validate: {
+            isIn: [[0, 1]],
+        },
+    },
+    published: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        validate: {
+            isIn: [[0, 1]],
+        },
     },
 });
 
-(async () => {
+export async function syncUserModel() {
     try {
         await User.sync();
     } catch (error) {
         console.error('Error creating User table:', error);
     }
-})();
+}
 
 export default User;
