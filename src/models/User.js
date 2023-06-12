@@ -1,5 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
+import Role from './Role';
+import Country from './Country';
 
 export const User = sequelize.define('User', {
     id: {
@@ -34,12 +36,24 @@ export const User = sequelize.define('User', {
     },
     role: {
         type: DataTypes.INTEGER,
+        references: {
+            model: Role,
+            key: 'id',
+        },
     },
     country_of_residence: {
         type: DataTypes.INTEGER,
+        references: {
+            model: Country,
+            key: 'id',
+        },
     },
     nationality: {
         type: DataTypes.INTEGER,
+        references: {
+            model: Country,
+            key: 'id',
+        },
     },
     oversea_family: {
         type: DataTypes.BOOLEAN,
