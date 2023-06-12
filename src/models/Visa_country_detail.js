@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
-import Country from '@/models/Country';
-import Visa from '@/models/Visa';
-import Currency from '@/models/Currency';
+import Country from './Country';
+import Visa from './Visa';
+import Currency from './Currency';
 
 const Visa_country_detail = sequelize.define('Visa_country_detail', {
     id: {

@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
-import Country from '@/models/Country';
-import Visa_country_detail from '@/models/Visa_country_detail';
+import Country from './Country';
+import Visa_country_detail from './Visa_country_detail';
 
 const Xref_visa_country = sequelize.define('Xref_visa_country', {
     country_id: {

@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
-import Post from '@/models/Post';
-import Category from '@/models/Category';
+import Post from './Post';
+import Category from './Category';
 
 const Xref_post_category = sequelize.define('Xref_post_category', {
     post_id: {
