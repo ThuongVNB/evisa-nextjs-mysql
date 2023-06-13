@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
+import { DataTypes } from 'sequelize';
 import { currencyData } from './currency_data.js';
 
 const Currency = sequelize.define('Currency', {
@@ -28,7 +28,10 @@ const Currency = sequelize.define('Currency', {
 export async function syncCurrencyModel() {
     try {
         await Currency.sync();
-        // await Currency.bulkCreate(currencyData.data);
+        const { count } = await Currency.findAndCountAll();
+        if (count === 0) {
+            await Currency.bulkCreate(currencyData.data);
+        }
     } catch (error) {
         console.error('Error creating Currency table:', error);
     }
