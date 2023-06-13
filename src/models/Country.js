@@ -1,5 +1,6 @@
-import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
+import { DataTypes } from 'sequelize';
+import { countryData } from './country_data';
 
 const Country = sequelize.define('Country', {
     id: {
@@ -19,14 +20,15 @@ const Country = sequelize.define('Country', {
     alias: {
         type: DataTypes.TEXT,
     },
-    desc: {
-        type: DataTypes.TEXT,
-    },
 });
 
 export async function syncCountryModel() {
     try {
         await Country.sync();
+        const { count } = await Country.findAndCountAll();
+        if (count === 0) {
+            await Country.bulkCreate(countryData.data);
+        }
     } catch (error) {
         console.error('Error creating Country table:', error);
     }
