@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
     process.env.MYSQL_INITDB_ROOT_PASSWORD,
     {
         host: process.env.MYSQL_INITDB_HOST,
-        port: process.env.HOST_MACHINE_MYSQL_PORT,
+        port: process.env.MYSQL_INITDB_PORT,
         dialect: 'mariadb',
         dialectModule: require('mariadb'),
     },
