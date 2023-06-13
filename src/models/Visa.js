@@ -16,12 +16,12 @@ const Visa = sequelize.define('Visa', {
     },
 });
 
-(async () => {
+export async function syncVisaModel() {
     try {
         await Visa.sync();
     } catch (error) {
         console.error('Error creating Visa table:', error);
     }
-})();
+}
 
 export default Visa;

@@ -22,12 +22,12 @@ const Xref_post_category = sequelize.define('Xref_post_category', {
     },
 });
 
-(async () => {
+export async function syncXref_post_categoryModel() {
     try {
         await Xref_post_category.sync();
     } catch (error) {
         console.error('Error creating Xref_post_category table:', error);
     }
-})();
+}
 
 export default Xref_post_category;

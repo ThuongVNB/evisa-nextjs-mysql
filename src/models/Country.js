@@ -24,12 +24,12 @@ const Country = sequelize.define('Country', {
     },
 });
 
-(async () => {
+export async function syncCountryModel() {
     try {
         await Country.sync();
     } catch (error) {
         console.error('Error creating Country table:', error);
     }
-})();
+}
 
 export default Country;

@@ -17,12 +17,12 @@ const Tag = sequelize.define('Tag', {
     },
 });
 
-(async () => {
+export async function syncTagModel() {
     try {
         await Tag.sync();
     } catch (error) {
         console.error('Error creating Tag table:', error);
     }
-})();
+}
 
 export default Tag;

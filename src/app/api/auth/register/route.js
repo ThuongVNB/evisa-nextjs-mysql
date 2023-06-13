@@ -1,5 +1,4 @@
 import { User } from '@/models/User';
-import { syncUserModel } from '@/models/User';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
@@ -9,9 +8,7 @@ export const POST = async (request) => {
     userData.password = hashedPassword;
 
     try {
-        await syncUserModel();
         const newUser = await User.create(userData);
-
         return new NextResponse('User has been created', {
             status: 201,
         });

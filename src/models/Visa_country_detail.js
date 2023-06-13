@@ -62,12 +62,11 @@ const Visa_country_detail = sequelize.define('Visa_country_detail', {
     },
 });
 
-(async () => {
+export async function syncVisa_country_detailModel() {
     try {
         await Visa_country_detail.sync();
     } catch (error) {
         console.error('Error creating Visa_country_detail table:', error);
     }
-})();
-
+}
 export default Visa_country_detail;

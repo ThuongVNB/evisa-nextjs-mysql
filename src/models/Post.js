@@ -64,13 +64,12 @@ const Post = sequelize.define('Post', {
     },
 });
 
-(async () => {
+export async function syncPostModel() {
     try {
         await Post.sync();
-        // console.log('Post table has been created (if it did not exist).');
     } catch (error) {
         console.error('Error creating Post table:', error);
     }
-})();
+}
 
 export default Post;

@@ -19,12 +19,12 @@ const Category = sequelize.define('Category', {
     },
 });
 
-(async () => {
+export async function syncCategoryModel() {
     try {
         await Category.sync();
     } catch (error) {
         console.error('Error creating Category table:', error);
     }
-})();
+}
 
 export default Category;

@@ -13,12 +13,12 @@ const Role = sequelize.define('Role', {
     },
 });
 
-(async () => {
+export async function syncRoleModel() {
     try {
         await Role.sync();
     } catch (error) {
         console.error('Error creating Role table:', error);
     }
-})();
+}
 
 export default Role;

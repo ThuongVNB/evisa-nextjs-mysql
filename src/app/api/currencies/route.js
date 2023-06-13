@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import Currency from '@/models/Currency';
 
 export const GET = async (request) => {
     try {
@@ -12,6 +11,7 @@ export const GET = async (request) => {
 
 export const POST = async (request) => {
     const CurrencyData = await request.json();
+
     try {
         const newCurrency = await Currency.create(CurrencyData);
         return new NextResponse('Currency has been created', { status: 201 });
