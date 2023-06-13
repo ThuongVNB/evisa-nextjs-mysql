@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import sequelize from '@/utils/db';
 import { syncCurrencyModel } from '@/models/Currency';
 import { syncUserModel } from '@/models/User';
 import { syncCategoryModel } from '@/models/Category';
@@ -31,5 +32,14 @@ export const POST = async (request) => {
         return new NextResponse('Migration has been successful', { status: 201 });
     } catch (error) {
         return new NextResponse('Database Error', { status: 500 });
+    }
+};
+
+export const GET = async (request) => {
+    try {
+        await sequelize.authenticate();
+        return new NextResponse('Connection has been established successfully.', { status: 200 });
+    } catch (error) {
+        return new NextResponse('Unable to connect to the database: ' + error, { status: 403 });
     }
 };
