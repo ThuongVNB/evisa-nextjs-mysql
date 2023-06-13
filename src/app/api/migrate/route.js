@@ -20,13 +20,14 @@ export const POST = async (request) => {
         await syncRoleModel();
         await syncTagModel();
         await syncVisaModel();
-        await syncPostModel();
-        await syncUserModel();
-        await syncOrderModel();
-        await syncVisa_country_detailModel();
-        await syncXref_post_categoryModel();
-        await syncXref_visa_countryModel();
 
+        // Table use Foreign Key
+        await syncUserModel();
+        await syncVisa_country_detailModel();
+        await syncOrderModel();
+        await syncXref_visa_countryModel();
+        await syncPostModel();
+        await syncXref_post_categoryModel();
         return new NextResponse('Migration has been successful', { status: 201 });
     } catch (error) {
         return new NextResponse('Database Error', { status: 500 });
