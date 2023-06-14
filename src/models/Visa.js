@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
 
-const Category = sequelize.define('Category', {
+const Visa = sequelize.define('Visa', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,20 +11,17 @@ const Category = sequelize.define('Category', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    level: {
-        type: DataTypes.INTEGER,
-    },
-    slug: {
-        type: DataTypes.STRING,
+    desc: {
+        type: DataTypes.TEXT,
     },
 });
 
-export async function syncCategoryModel() {
+export async function syncVisaModel() {
     try {
-        await Category.sync();
+        await Visa.sync();
     } catch (error) {
-        console.error('Error creating Category table:', error);
+        console.error('Error creating Visa table:', error);
     }
 }
 
-export default Category;
+export default Visa;

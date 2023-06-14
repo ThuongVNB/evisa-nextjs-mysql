@@ -3,8 +3,8 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '@/models/User';
-import connect from '@/utils/db';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const handler = NextAuth({
     providers: [
@@ -12,18 +12,27 @@ const handler = NextAuth({
             id: 'credentials',
             name: 'Credentials',
             async authorize(credentials) {
-                //Check if the user exists.
-                await connect();
-
                 try {
                     const user = await User.findOne({
                         email: credentials.email,
+                        raw: true,
                     });
-
                     if (user) {
                         const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
 
                         if (isPasswordCorrect) {
+                            jwt.sign(
+                                {
+                                    email: user.email,
+                                },
+                                process.env.JWT_KEY,
+                                {
+                                    expiresIn: 31556926, // 1 year in seconds
+                                },
+                                (err, token) => {
+                                    user.token = 'Bearer ' + token;
+                                },
+                            );
                             return user;
                         } else {
                             throw new Error('Wrong Credentials!');

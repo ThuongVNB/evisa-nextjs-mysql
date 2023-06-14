@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
 
-const Category = sequelize.define('Category', {
+const Tag = sequelize.define('Tag', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -11,20 +11,18 @@ const Category = sequelize.define('Category', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    level: {
-        type: DataTypes.INTEGER,
-    },
     slug: {
         type: DataTypes.STRING,
+        unique: true,
     },
 });
 
-export async function syncCategoryModel() {
+export async function syncTagModel() {
     try {
-        await Category.sync();
+        await Tag.sync();
     } catch (error) {
-        console.error('Error creating Category table:', error);
+        console.error('Error creating Tag table:', error);
     }
 }
 
-export default Category;
+export default Tag;
