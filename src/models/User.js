@@ -35,10 +35,10 @@ export const User = sequelize.define('User', {
         type: DataTypes.STRING,
     },
     role: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         references: {
             model: Role,
-            key: 'id',
+            key: 'value',
         },
     },
     country_of_residence: {
