@@ -31,6 +31,9 @@ export const User = sequelize.define('User', {
     phone_number: {
         type: DataTypes.STRING,
     },
+    activation: {
+        type: DataTypes.STRING,
+    },
     role: {
         type: DataTypes.INTEGER,
         references: {

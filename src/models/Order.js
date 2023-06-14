@@ -48,11 +48,6 @@ export const Order = sequelize.define('Order', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    status: {
-        type: DataTypes.ENUM,
-        values: ['Pending', 'Processing', 'Completed', 'Cancelled'],
-        defaultValue: 'Pending',
-    },
 });
 
 export async function syncOrderModel() {
