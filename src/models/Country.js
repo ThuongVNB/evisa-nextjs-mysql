@@ -17,6 +17,9 @@ const Country = sequelize.define('Country', {
         allowNull: false,
         unique: true,
     },
+    phone: {
+        type: DataTypes.CHAR(10),
+    },
     alias: {
         type: DataTypes.TEXT,
     },
