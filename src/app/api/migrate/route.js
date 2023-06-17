@@ -12,6 +12,7 @@ import { syncVisa_country_detailModel } from '@/models/visa_country_detail';
 import { syncVisaModel } from '@/models/Visa';
 import { syncXref_post_categoryModel } from '@/models/Xref_post_category';
 import { syncXref_visa_countryModel } from '@/models/Xref_visa_country';
+import { syncCouponModel } from '@/models/Coupon';
 
 export const POST = async (request) => {
     try {
@@ -21,6 +22,7 @@ export const POST = async (request) => {
         await syncRoleModel();
         await syncTagModel();
         await syncVisaModel();
+        await syncCouponModel();
 
         // Table use Foreign Key
         await syncUserModel();

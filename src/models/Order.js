@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import sequelize from '@/utils/db';
 import Currency from './Currency';
 import Visa_country_detail from './Visa_country_detail';
+import Coupon from './Coupon';
 
 export const Order = sequelize.define('Order', {
     id: {
@@ -33,8 +34,13 @@ export const Order = sequelize.define('Order', {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    discount: {
-        type: DataTypes.FLOAT,
+    coupon: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+            model: Coupon,
+            key: 'code',
+        },
     },
     currency: {
         type: DataTypes.INTEGER,
