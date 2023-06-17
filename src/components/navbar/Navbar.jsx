@@ -34,14 +34,9 @@ const links = [
   },
   {
     id: 6,
-    title: "Dashboard",
-    url: "/dashboard",
-  },
-  {
-    id: 7,
-    title: "Hoang",
-    url: "/hoang",
-  },
+    title: "Admin",
+    url: "/admin/dashboard",
+  }
 ];
 
 const Navbar = () => {
