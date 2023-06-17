@@ -9,6 +9,14 @@ export const roleData = {
             value: 'moderator',
         },
         {
+            name: 'Intern',
+            value: 'intern',
+        },
+        {
+            name: 'Sales',
+            value: 'sales',
+        },
+        {
             name: 'Registered User',
             value: 'registered',
         },
