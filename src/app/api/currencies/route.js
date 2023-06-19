@@ -1,3 +1,4 @@
+import Currency from '@/models/Currency';
 import { NextResponse } from 'next/server';
 
 export const GET = async (request) => {

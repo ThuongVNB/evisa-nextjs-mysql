@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import React from 'react'
 import { useState, useEffect } from 'react';
 
-export default function VisaDelete({selectedRow}) {
+export default function VisaDelete({onDelete, selectedRow}) {
     // console.log("selectedRow", selectedRow);
   const [selectedRowEdit, setSelectedRowEdit] = useState(selectedRow)
   const [open, setOpen] = useState(false);
@@ -15,6 +15,11 @@ export default function VisaDelete({selectedRow}) {
     setOpen(true)
     console.log("selectedRowEdit", selectedRowEdit);
   }
+  const handleConfirm = () => {
+    onDelete(selectedRow);
+    setOpen(false);
+  }
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -40,7 +45,7 @@ export default function VisaDelete({selectedRow}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Quay lại</Button>
-          <Button onClick={handleClose} autoFocus>Xác nhận</Button>
+          <Button onClick={handleConfirm} autoFocus>Xác nhận</Button>
         </DialogActions>
       </Dialog>
     </>
