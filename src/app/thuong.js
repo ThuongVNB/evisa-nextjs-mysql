@@ -1,6 +1,4 @@
 import User from '@/models/User';
-import { readdirSync } from 'fs';
-import { join } from 'path';
 
 export async function isAllowed(request, checkRole = null) {
     const payload = request.headers.get('evisa');
@@ -16,10 +14,10 @@ export async function isAllowed(request, checkRole = null) {
     if (!user || user.role !== decodedPayload.role) return false;
     if (checkRole && user.role !== checkRole) return false;
 
-    // const apiDirectory = join(process.cwd(), 'app/');
-    // const apiFiles = readdirSync(apiDirectory);
+    const { url, nextUrl, headers } = request;
 
-    // console.log('xxxxxxxxxx', apiFiles);
+    // console.log('xxxxxxxxxx', url);
+    // const isAuthApis = url.startsWith('/api/tags');
 
     return true;
 }
