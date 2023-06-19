@@ -1,36 +1,35 @@
 services:
-  mysql:
-    image: mariadb:10.5
-    container_name: 'mysql'
-    command: mysqld --sql_mode="" --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    ports:
-      - "${HOST_MACHINE_MYSQL_PORT}:3306"
-    volumes:
-      - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
-      - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    networks:
-      - web-network
+    mysql:
+        image: mariadb:10.5
+        container_name: 'mysql'
+        command: mysqld --sql_mode="" --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        ports:
+            - '${HOST_MACHINE_MYSQL_PORT}:3306'
+        volumes:
+            - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
+            - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        networks:
+            - web-network
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: 'phpmyadmin'
-    restart: unless-stopped
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    ports:
-      - '8080:80'
-    depends_on:
-      - mysql
-    volumes:
-      - /sessions
-    networks:
-      - web-network
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: 'phpmyadmin'
+        restart: unless-stopped
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+        ports:
+            - '8080:80'
+        depends_on:
+            - mysql
+        volumes:
+            - /sessions
+        networks:
+            - web-network
 
 networks:
-  web-network:
-    driver: bridge
-
+    web-network:
+        driver: bridge

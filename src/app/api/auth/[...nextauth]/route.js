@@ -17,29 +17,26 @@ const handler = NextAuth({
                         email: credentials.email,
                         raw: true,
                     });
-                    if (user) {
-                        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+                    if (!user) throw new Error('User not found!');
+                    if (user.activation !== '') throw new Error('Please, Activate your account in Email!');
+                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+                    if (!isPasswordCorrect) throw new Error('Wrong Credentials!');
 
-                        if (isPasswordCorrect) {
-                            jwt.sign(
-                                {
-                                    email: user.email,
-                                },
-                                process.env.JWT_KEY,
-                                {
-                                    expiresIn: 31556926, // 1 year in seconds
-                                },
-                                (err, token) => {
-                                    user.token = 'Bearer ' + token;
-                                },
-                            );
-                            return user;
-                        } else {
-                            throw new Error('Wrong Credentials!');
-                        }
-                    } else {
-                        throw new Error('User not found!');
-                    }
+                    jwt.sign(
+                        {
+                            email: user.email,
+                            role: user.role,
+                        },
+                        process.env.JWT_KEY,
+                        {
+                            expiresIn: process.env.JWT_EXPIRED_TIME,
+                        },
+                        (err, token) => {
+                            user.token = 'Bearer ' + token;
+                            console.log('xxxxxxxxxxxxx11111111111111111', user);
+                        },
+                    );
+                    return user;
                 } catch (err) {
                     throw new Error(err);
                 }

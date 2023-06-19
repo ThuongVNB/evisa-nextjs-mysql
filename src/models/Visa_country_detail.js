@@ -3,6 +3,7 @@ import sequelize from '@/utils/db';
 import Country from './Country';
 import Visa from './Visa';
 import Currency from './Currency';
+import Coupon from './Coupon';
 
 const Visa_country_detail = sequelize.define('Visa_country_detail', {
     id: {
@@ -51,6 +52,13 @@ const Visa_country_detail = sequelize.define('Visa_country_detail', {
         references: {
             model: Currency,
             key: 'id',
+        },
+    },
+    coupon: {
+        type: DataTypes.STRING,
+        references: {
+            model: Coupon,
+            key: 'code',
         },
     },
     published: {
