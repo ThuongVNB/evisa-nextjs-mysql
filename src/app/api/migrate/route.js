@@ -8,7 +8,7 @@ import { syncOrderModel } from '@/models/Order';
 import { syncPostModel } from '@/models/Post';
 import { syncRoleModel } from '@/models/Role';
 import { syncTagModel } from '@/models/Tag';
-import { syncVisa_country_detailModel } from '@/models/visa_country_detail';
+import { syncVisa_country_detailModel } from '@/models/Visa_country_detail';
 import { syncVisaModel } from '@/models/Visa';
 import { syncXref_post_categoryModel } from '@/models/Xref_post_category';
 import { syncXref_visa_countryModel } from '@/models/Xref_visa_country';
