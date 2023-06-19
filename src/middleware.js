@@ -61,6 +61,8 @@ async function validateToken(jwtToken) {
 
     try {
         const { email, exp, role } = jwt.decode(jwtToken);
+        if (!email || !role) return false;
+
         const currentTimestamp = Math.floor(Date.now() / 1000);
 
         if (exp > currentTimestamp) {
@@ -75,38 +77,4 @@ async function validateToken(jwtToken) {
     } catch (error) {
         return false;
     }
-}
-
-export function isAdmin(request) {
-    return isAllowed(request, 'administrator');
-}
-
-export function isMod(request) {
-    return isAllowed(request, 'moderator');
-}
-
-export function isIntern(request) {
-    return isAllowed(request, 'intern');
-}
-
-export function isSales(request) {
-    return isAllowed(request, 'sales');
-}
-
-export function isAuthorized(request, roles) {
-    return isAllowed(request, roles);
-}
-
-function isAllowed(request, roles) {
-    const payload = request.headers.get('evisa');
-    if (!payload) return false;
-
-    const decodePayload = JSON.parse(payload);
-    if (!decodePayload) return false;
-
-    if (decodePayload.role === roles || roles.includes(decodePayload.role)) {
-        return true;
-    }
-
-    return false;
 }
