@@ -13,6 +13,8 @@ import { syncVisaModel } from '@/models/Visa';
 import { syncXref_post_categoryModel } from '@/models/Xref_post_category';
 import { syncXref_visa_countryModel } from '@/models/Xref_visa_country';
 import { syncCouponModel } from '@/models/Coupon';
+import { syncPermissionModel } from '@/models/Permission';
+import { syncXref_role_permissionModel } from '@/models/Xref_role_permission';
 
 export const POST = async (request) => {
     try {
@@ -23,8 +25,10 @@ export const POST = async (request) => {
         await syncTagModel();
         await syncVisaModel();
         await syncCouponModel();
+        await syncPermissionModel();
 
         // Table use Foreign Key
+        await syncXref_role_permissionModel();
         await syncUserModel();
         await syncVisa_country_detailModel();
         await syncOrderModel();
