@@ -7,10 +7,20 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { ADD_VISA } from '@/Reducer/Admin/VisaSlice';
 
+const aaa = [
+  {id: 'a', name: 'a', title: 'a'},
+  {id: 'b', name: 'b', title: 'b'},
+  {id: 'c', name: 'c', title: 'c'},
+
+]
 export default function VisaAdd() {
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const visa = useSelector((state) => state.Visa)
+  const dispatch = useDispatch()
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -18,6 +28,14 @@ export default function VisaAdd() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleAddVisa = () => {
+    const a = {id: 'a', name: 'b', title: 'c'}
+    dispatch(ADD_VISA({
+      payload: a,
+      state: aaa
+    }));
+  }
 
   return (
     <div>
@@ -65,7 +83,7 @@ export default function VisaAdd() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={handleClose}>Thêm</Button>
+          <Button onClick={handleAddVisa}>Thêm</Button>
         </DialogActions>
       </Dialog>
     </div>
