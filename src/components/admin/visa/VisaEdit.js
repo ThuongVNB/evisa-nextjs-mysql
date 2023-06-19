@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { DataCountry } from '@/components/Home/HomeData/getCountryData';
 import { Autocomplete, Box, MenuItem, Select } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { ADD_VISA, DELETE_VISA, UPDATE_VISA} from '@/Reducer/Admin/VisaSlice';
 
 const listTypeVisa = [
   {id: 1, label: 'Tourist Visa', value: 'tourist_visa', price: '42$'},
@@ -30,6 +32,7 @@ const listDataCurrency = [
 export default function VisaEdit({selectedRow}) {
   const [open, setOpen] = useState(false);
   const [selectedRowEdit, setSelectedRowEdit] = useState(selectedRow)
+  const dispatch = useDispatch();
   const handleClickOpen = () => {
     if(selectedRowEdit.length !== 1) {
       alert("Vui lòng chọn và chỉ chọn 1 trường dữ liệu để sửa")
@@ -46,6 +49,10 @@ export default function VisaEdit({selectedRow}) {
   const handleSubmit = (data) => {
     e.preventDefault();
     console.log(data);
+  }
+
+  const handleAddVisa = () => {
+    dispatch(UPDATE_VISA())
   }
 
   useEffect(() => {
@@ -183,7 +190,7 @@ export default function VisaEdit({selectedRow}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button type='submit'>Thêm</Button>
+          <Button onClick={handleAddVisa} type='submit'>Thêm</Button>
         </DialogActions>
         </form>
       </Dialog>
