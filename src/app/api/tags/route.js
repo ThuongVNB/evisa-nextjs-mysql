@@ -1,7 +1,6 @@
 import Tag from '@/models/Tag';
 import { NextResponse } from 'next/server';
-import { isAdmin, isMod, isIntern, isAuthorized } from '@/middleware';
-import { isAuth } from '@/app/thuong';
+import { isAllowed } from '@/app/thuong';
 
 export const GET = async (request) => {
     try {

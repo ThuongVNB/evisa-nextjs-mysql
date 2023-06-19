@@ -1,5 +1,6 @@
 import User from '@/models/User';
-import { getSortedRoutes } from 'next/dist/next-server/lib/router/utils/sorted-routes';
+import { readdirSync } from 'fs';
+import { join } from 'path';
 
 export async function isAllowed(request, checkRole = null) {
     const payload = request.headers.get('evisa');
@@ -15,19 +16,12 @@ export async function isAllowed(request, checkRole = null) {
     if (!user || user.role !== decodedPayload.role) return false;
     if (checkRole && user.role !== checkRole) return false;
 
-    // Get all routes
-    const allRoutes = getSortedRoutes();
+    // const apiDirectory = join(process.cwd(), 'app/');
+    // const apiFiles = readdirSync(apiDirectory);
 
-    // Filter out only the API routes
-    const apiRoutes = allRoutes.filter((route) => route.page.startsWith('/api/'));
+    // console.log('xxxxxxxxxx', apiFiles);
 
-    // Extract the API route paths
-    const apiRoutePaths = apiRoutes.map((route) => route.page.substring('/api'.length));
-
-    console.log(apiRoutePaths);
-
-    console.log('xxxxxxxxxx');
-    return false;
+    return true;
 }
 
 export function isAdmin(request) {
