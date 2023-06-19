@@ -2,7 +2,6 @@ import sequelize from '@/utils/db';
 import { DataTypes } from 'sequelize';
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import { log } from 'console';
 
 const Permission = sequelize.define('Permission', {
     id: {

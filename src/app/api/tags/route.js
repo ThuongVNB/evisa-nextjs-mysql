@@ -1,6 +1,6 @@
 import Tag from '@/models/Tag';
 import { NextResponse } from 'next/server';
-import { isAllowed } from '@/app/thuong';
+import { isAllowed } from '@/app/authorization';
 
 export const GET = async (request) => {
     try {
@@ -13,13 +13,6 @@ export const GET = async (request) => {
 
 export const POST = async (request) => {
     if (!(await isAllowed(request))) return new NextResponse('You do not have permission', { status: 401 });
-    // const a = await isAuth(request);
-
-    // console.log('xxxxxxxxxxxxxxxx', a);
-
-    // if (!isAuthorized(request, ['administrator', 'moderator', 'registered'])) {
-    //     return new NextResponse('You do not have permission', { status: 401 });
-    // }
 
     const TagData = await request.json();
     try {
