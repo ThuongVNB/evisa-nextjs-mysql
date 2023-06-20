@@ -40,3 +40,8 @@ next-env.d.ts
 #mysql from docker
 /data
 /logs
+
+
+#public
+/public/avatar/
+/public/posts/
