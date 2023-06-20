@@ -7,21 +7,40 @@ import VisaAdd from './VisaAdd';
 import VisaDetail from './VisaDetail';
 import { CircularProgress} from '@mui/material';
 import { columns, rows } from './VisaModel';
+import { getDataCurrency } from '../currency/getDataCurency';
+import { getAllTypeVisa } from '../type_visa/getData';
+import { getAllCountry } from '../getData/getDataAdmin';
+import { handleDataForAutocomplete } from '../Function_Admin';
+import { useSession } from 'next-auth/react';
 
 export default function VisaTable() {
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState([])
     const [loading, setLoading] = useState(true);
-    // const fetchData = async () => {
-    //     let response = await (
-    //       await fetch("https://reqres.in/api/Visas?page=1")
-    //     ).json();
-    //     setData(response.data);
-    // };
-    useEffect(() => {
-      // fetchData();
-      setData(rows)
+    const [listCurrency, setListCurrency] = useState([]);
+    const [listCountry, setListCountry] = useState([])
+    const [listTypeVisa, setListTypeVisa] = useState([]);
+
+    async function getAllData() {
+    try {
       setLoading(false)
+      const resp = await getDataCurrency();
+      handleDataForAutocomplete(resp)
+      setListCurrency(resp);
+      const resp2 = await getAllTypeVisa();
+      handleDataForAutocomplete(resp2)
+      setListTypeVisa(resp2);
+      const dataCountries = await getAllCountry();
+      handleDataForAutocomplete(dataCountries);
+      setListCountry(dataCountries);
+      } catch (error) {
+        throw error;
+      }
+    }
+    
+    useEffect(() => {
+      getAllData();
+      setData(rows)
     }, []);
 
     const handleSelectRow = (list) => {
@@ -95,7 +114,7 @@ export default function VisaTable() {
       />
     }
     <div className='visa-control'>
-      <VisaAdd onAdd={onAdd} />
+      <VisaAdd onAdd={onAdd} listTypeVisa={listTypeVisa} listCurrency={listCurrency} listCountry={listCountry} />
       <VisaEdit onEdit={onEdit} selectedRow={selectedRow} />
       <VisaDetail selectedRow={selectedRow}/>
       <VisaDelete onDelete={onDelete} selectedRow={selectedRow} />  

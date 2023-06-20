@@ -7,29 +7,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { ADD_VISA } from '@/Reducer/Admin/VisaSlice';
 import { Autocomplete, MenuItem, Select } from '@mui/material';
 import { useEffect } from 'react';
-import { getDataCurrency } from '../currency/getDataCurency';
-import { getAllTypeVisa } from '../type_visa/getData';
+import { useSession } from 'next-auth/react';
 
-const dataCurrency = [
-  {id: 1, label: 'USD', label: 'USD', year: 1994 },
-  {id: 2, label: 'VND',label: 'VND', year: 1972 },
-]
 
-async function getDataCurrency11() {
-    const a = await getDataCurrency();
-    console.log(a);
-    return a;
-}
-
-export default function VisaAdd({onAdd}) {
+export default function VisaAdd({onAdd, listTypeVisa, listCurrency, listCountry}) {
+  const session = useSession();
   const [open, setOpen] = useState(false);
   const [visaID, setVisaID] = useState();
-  const [countryID, setCountryID] = useState();
+  const [countryID, setCountryID] = useState('');
   const [typeVisa, setTypeVisa] = useState('');
   const [validity, setValidity] = useState();
   const [processingTimes, setProcessingTimes] = useState();
@@ -38,25 +26,6 @@ export default function VisaAdd({onAdd}) {
   const [requirementDesc, setRequirementDesc] = useState();
   const [currency, setCurrency] = useState('');
   const [published, setPublished] = useState('');
-  const [listTypeVisa, setListTypeVisa] = useState([]);
-  const [listCurrency, setListCurrency] = useState([]);
-
-  // useEffect(async() => {
-  //   const resp = await fetch(`http://localhost:3000/api/visas`)
-  //   const dataJson = await resp.json();
-  //   return setListTypeVisa(dataJson)
-  // }, [])
-
-  async function getAllData() {
-  const resp = await getDataCurrency();
-  setListCurrency(resp);
-  const resp2 = await getAllTypeVisa();
-  setListTypeVisa(resp2);
-  }
-
-  useEffect(()=> {
-    getAllData();
-  }, [])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,27 +36,29 @@ export default function VisaAdd({onAdd}) {
   };
 
   const handleAddVisa = () => {
-    // const newData = {id: 5, country_id: 'France', type_visa: 'eVisa', validity: '60 days', processing_times: '30 days', standard_fee: 200, goverment_fee: 15, requirement_desc: 'Yêu cầu passport, tiêm hai mũi Vacine', currency: 'USD', published: 'Đang sử dụng'};
+    const currencyObject = listCurrency.find((item) => item.name === currency);
+    const countryIDObject = listCountry.find(item => item.name === countryID);
+    const typeVisaObject = listTypeVisa.find(item => item.desc === typeVisa);
     if(visaID && countryID && typeVisa && validity && processingTimes && standardFee && govermentFee && requirementDesc && currency && published) {
       const newData = {
         id: visaID,
-        country_id: countryID,
-        type_visa: typeVisa,
+        country_id: countryIDObject.code,
+        type_visa: typeVisaObject.name,
         validity: validity,
         processing_times: processingTimes,
         standard_fee: standardFee,
         goverment_fee: govermentFee,
         requirement_desc: requirementDesc,
-        currency: currency,
+        currency: currencyObject.code,
         published: published
       }
-      onAdd(newData);
+      console.log("newData", newData);
+      // fetching api;
+      // onAdd(newData);
       setOpen(false);
     } else {
       alert("Vui lòng nhập đủ thông tin")
     }
-    
-    
   }
 
   return (
@@ -109,23 +80,28 @@ export default function VisaAdd({onAdd}) {
             fullWidth
             variant="standard"
             onChange={(e) => setVisaID(e.target.value)}
-            value={visaID}
+            value={visaID || null}
           />
-          <TextField
-            id="country_id"
-            label="country_id"
-            name='country_id'
-            type="text"
+          <Autocomplete
             fullWidth
-            variant="standard"
-            onChange={(e) => setCountryID(e.target.value)}
+            disablePortal
+            id="country_id"
+            options={listCountry}
+            renderInput={(params) => <TextField {...params} variant='standard' fullWidth label="country_id" />}
+            renderOption={(props, option) => {
+              return (
+                <li {...props} key={option.code}>
+                  {option.name}
+                </li>
+              );
+            }}
             value={countryID}
+            onInputChange={(event, newInputValue) => setCountryID(newInputValue)}
           />
           <TextField
             variant='standard'
             value={typeVisa}
             onChange={(e) => {
-              console.log("eeeeee", e.target.value);
               setTypeVisa(e.target.value)
             }}
             select
@@ -139,7 +115,7 @@ export default function VisaAdd({onAdd}) {
 
           <TextField
             id="validity"
-            label="validity"
+            label={'Hiệu lực'}
             name="validity"
             type="text"
             fullWidth
@@ -149,7 +125,7 @@ export default function VisaAdd({onAdd}) {
           />
           <TextField
             id="processing_times"
-            label="processing_times"
+            label={'Thời gian xử lý'}
             name="processing_times"
             type="text"
             fullWidth
@@ -159,7 +135,7 @@ export default function VisaAdd({onAdd}) {
           />
           <TextField
             id="standard_fee"
-            label="standard_fee"
+            label={'Chi phí'}
             name="standard_fee"
             type="number"
             fullWidth
@@ -169,7 +145,7 @@ export default function VisaAdd({onAdd}) {
           />
           <TextField
             id="goverment_fee"
-            label="goverment_fee"
+            label={'Phí Chính phủ'}
             name="goverment_fee"
             type="number"
             fullWidth
@@ -179,7 +155,7 @@ export default function VisaAdd({onAdd}) {
           />
           <TextField
             id="requirement_desc"
-            label="requirement_desc"
+            label={'Yêu cầu'}
             name="requirement_desc"
             type="text"
             fullWidth
@@ -195,10 +171,15 @@ export default function VisaAdd({onAdd}) {
             id="currency"
             options={listCurrency}
             renderInput={(params) => <TextField {...params} variant='standard' fullWidth label="Currency" />}
-            value={currency}
-            onInputChange={(event, newInputValue) => setCurrency(newInputValue)}
+            renderOption={(props, option) => {
+              return (
+                <li {...props} key={option.code}>{option.code} - {option.name}</li>
+              );
+            }}
+            value={currency || null}
+            onInputChange={(event, newInputValue) => {
+            setCurrency(newInputValue)}}
           />
-
           <TextField
             variant='standard'
             value={published}
@@ -207,10 +188,10 @@ export default function VisaAdd({onAdd}) {
             label="published"
             fullWidth
           >
-            <MenuItem key={1} value="test">
+            <MenuItem key={1} value="1">
               Đang sử dụng
             </MenuItem>
-            <MenuItem key={2} value="test2">
+            <MenuItem key={2} value="0">
               Tạm ngưng
             </MenuItem>
           </TextField>
