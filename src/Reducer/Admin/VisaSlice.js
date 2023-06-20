@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    visa: {}
+    visa: [
+      {id: 'aa', name: 'bb', title: 'cc'}
+    ]
 }
 
 export const VisaSlice = createSlice({
@@ -11,10 +13,9 @@ export const VisaSlice = createSlice({
     ADD_VISA: (state, action) => {
         // console.log("state", state.visa);
         console.log("action", action.payload);
-        const a = [...action.payload.state, action.payload.payload]
-      alert("ADD_VISA")
-      return a;
-       
+        const a = [...initialState.visa, action.payload];
+        console.log("aaaaa", a);
+        return [...initialState.visa, action.payload];
     },
     UPDATE_VISA: (state, action) => {
         alert("UPDATE_VISA")

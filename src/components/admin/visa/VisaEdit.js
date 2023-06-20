@@ -29,7 +29,7 @@ const listDataCurrency = [
   {id: 2, label: 'VND', value: 'VND'}
 ]
 
-export default function VisaEdit({selectedRow}) {
+export default function VisaEdit({selectedRow, onEdit}) {
   const [open, setOpen] = useState(false);
   const [selectedRowEdit, setSelectedRowEdit] = useState(selectedRow)
   const dispatch = useDispatch();
@@ -52,7 +52,12 @@ export default function VisaEdit({selectedRow}) {
   }
 
   const handleAddVisa = () => {
-    dispatch(UPDATE_VISA())
+    const selectedRowCopy = selectedRow;
+    console.log('selectedRowCopy', selectedRowCopy);
+    selectedRowCopy[0].country_id = "Hoang sua";
+    const newData = {id: 2, country_id: 'Vietnam2', type_visa: 'eVisa', validity: '60 days', processing_times: '30 days', standard_fee: 200, goverment_fee: 15, requirement_desc: 'Yêu cầu passport, tiêm hai mũi Vacine', currency: 'USD', published: 'Đang sử dụng'};
+    onEdit(selectedRowCopy[0]);
+    setOpen(false);
   }
 
   useEffect(() => {
@@ -65,7 +70,6 @@ export default function VisaEdit({selectedRow}) {
         Sửa
       </Button>
       <Dialog open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit}>
         <DialogTitle>Sửa</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -192,7 +196,6 @@ export default function VisaEdit({selectedRow}) {
           <Button onClick={handleClose}>Huỷ</Button>
           <Button onClick={handleAddVisa} type='submit'>Thêm</Button>
         </DialogActions>
-        </form>
       </Dialog>
     </div>
   );

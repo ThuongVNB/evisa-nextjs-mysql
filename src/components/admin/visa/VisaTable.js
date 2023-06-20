@@ -5,30 +5,13 @@ import VisaEdit from './VisaEdit';
 import VisaDelete from './VisaDelete';
 import VisaAdd from './VisaAdd';
 import VisaDetail from './VisaDetail';
-
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'country_id', headerName: 'Quốc gia', width: 130 },
-  { field: 'type_visa', headerName: 'Loại visa', width: 130 },
-  {field: 'validity', headerName: 'Hiệu lực', width: 200},
-  {field: 'processing_times', headerName: 'Thời gian xử lý', width: 200},
-  {field: 'standard_fee', headerName: 'Chi phí', width: 200},
-  {field: 'goverment_fee', headerName: 'Phí Chính phủ', width: 200},
-  {field: 'requirement_desc', headerName: 'Điều kiện thêm', width: 500},
-  {field: 'currency', headerName: 'Đơn vị tiền', width: 100},
-  {field: 'published', headerName: 'Trạng thái', width: 120},
-];
-
-const rows = [
-  {id: 1, country_id: 'Vietnam', type_visa: 'eVisa', validity: '60 days', processing_times: '20 days', standard_fee: 120, goverment_fee: 25, requirement_desc: 'Yêu cầu passport, tiêm hai mũi Vacine', currency: 'USD', published: 'Đang sử dụng'},
-  {id: 2, country_id: 'Cambodia', type_visa: 'Tourist Visa', validity: '60 days', processing_times: '20 days', standard_fee: 120, goverment_fee: 20, requirement_desc: 'Yêu cầu passport, tiêm hai mũi Vacine', currency: 'USD', published: 'Tạm ngưng'},
-  {id: 3, country_id: 'Laos', type_visa: 'eVisa', validity: '60 days', processing_times: '20 days', standard_fee: 120, goverment_fee: 30, requirement_desc: 'Yêu cầu passport, tiêm hai mũi Vacine', currency: 'USD', published: 'Đang sử dụng'},
-  {id: 4, country_id: 'Thailand', type_visa: 'eVisa', validity: '60 days', processing_times: '20 days', standard_fee: 120, goverment_fee: 15, requirement_desc: 'Yêu cầu passport, tiêm hai mũi Vacine', currency: 'USD', published: 'Tạm ngưng'},
-]
+import { CircularProgress} from '@mui/material';
+import { columns, rows } from './VisaModel';
 
 export default function VisaTable() {
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState([])
+    const [loading, setLoading] = useState(true);
     // const fetchData = async () => {
     //     let response = await (
     //       await fetch("https://reqres.in/api/Visas?page=1")
@@ -36,8 +19,9 @@ export default function VisaTable() {
     //     setData(response.data);
     // };
     useEffect(() => {
-        // fetchData();
-        setData(rows)
+      // fetchData();
+      setData(rows)
+      setLoading(false)
     }, []);
 
     const handleSelectRow = (list) => {
@@ -49,12 +33,57 @@ export default function VisaTable() {
       
       setSelectedRow(listrowSelected);
     }
+
+    const onAdd = async (newData) => {
+      const response = await fetch('http://localhost:3000/api/visas', {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: "follow", // manual, *follow, error
+        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(newData), // body data type must match "Content-Type" header
+      });
+      console.log("response", response)
+      return;
+      const dataCurrent = [...data];
+      const checkExisted = dataCurrent.findIndex((item) => item.id === newData.id)
+      if(checkExisted == -1) {
+        const newDataCurrent = [...dataCurrent, newData];
+        setData(newDataCurrent);
+      }
+      else {
+        alert("Visa nay da ton tai")
+      }
+    }
+
+    const onEdit = (newData) => {
+      const dataCurrent = [...data];
+      const indexEdit = dataCurrent.findIndex(item => item.id === newData.id);
+      if(indexEdit !== -1) {
+        dataCurrent[indexEdit] = newData;
+        setData(dataCurrent);
+      }
+    }
+
+    const onDelete = (listData) => {
+      const dataCurrent = [...data];
+      const newDataCurrent = dataCurrent.filter((element) => !listData.includes(element));
+      setData(newDataCurrent)
+      
+    }
+
   return (
     <>
+    {loading ? <CircularProgress /> : 
       <DataGrid
         onRowSelectionModelChange={handleSelectRow}
         // rows={data}
-        rows={rows}
+        rows={data}
         columns={columns}
         initialState={{
           pagination: {
@@ -64,11 +93,12 @@ export default function VisaTable() {
         pageSizeOptions={[5, 10]}
         checkboxSelection
       />
+    }
     <div className='visa-control'>
-      <VisaAdd />
-      <VisaEdit selectedRow={selectedRow} />
+      <VisaAdd onAdd={onAdd} />
+      <VisaEdit onEdit={onEdit} selectedRow={selectedRow} />
       <VisaDetail selectedRow={selectedRow}/>
-      <VisaDelete selectedRow={selectedRow} />  
+      <VisaDelete onDelete={onDelete} selectedRow={selectedRow} />  
     </div>
     </>
   );
