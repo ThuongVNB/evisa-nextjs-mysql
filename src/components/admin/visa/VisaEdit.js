@@ -13,6 +13,7 @@ import { DataCountry } from '@/components/Home/HomeData/getCountryData';
 import { Autocomplete, Box, MenuItem, Select } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { ADD_VISA, DELETE_VISA, UPDATE_VISA} from '@/Reducer/Admin/VisaSlice';
+import Swal from 'sweetalert2';
 
 const listTypeVisa = [
   {id: 1, label: 'Tourist Visa', value: 'tourist_visa', price: '42$'},
@@ -35,7 +36,12 @@ export default function VisaEdit({selectedRow, onEdit}) {
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     if(selectedRowEdit.length !== 1) {
-      alert("Vui lòng chọn và chỉ chọn 1 trường dữ liệu để sửa")
+      Swal.fire({
+        title: 'Thông báo!',
+        text: 'Vui lòng chọn và chỉ chọn 1 trường dữ liệu để sửa',
+        icon: 'info',
+        confirmButtonText: 'Đã hiểu'
+      })
       return;
     }
     setOpen(true);
@@ -69,7 +75,7 @@ export default function VisaEdit({selectedRow, onEdit}) {
       <Button variant="contained" onClick={handleClickOpen}>
         Sửa
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} maxWidth={'xl'}>
         <DialogTitle>Sửa</DialogTitle>
         <DialogContent>
           <DialogContentText>

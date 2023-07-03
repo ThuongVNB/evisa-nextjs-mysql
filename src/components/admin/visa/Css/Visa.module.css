@@ -1,0 +1,10 @@
+.visa__control {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.visa__input {
+    width: 100%;
+    margin-bottom: 12px;
+}

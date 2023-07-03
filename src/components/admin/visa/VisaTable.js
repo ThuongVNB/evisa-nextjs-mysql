@@ -1,4 +1,5 @@
 "use client";
+import styles from './Css/Visa.module.css'
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import VisaEdit from './VisaEdit';
@@ -37,7 +38,7 @@ export default function VisaTable() {
         throw error;
       }
     }
-    
+
     useEffect(() => {
       getAllData();
       setData(rows)
@@ -113,7 +114,7 @@ export default function VisaTable() {
         checkboxSelection
       />
     }
-    <div className='visa-control'>
+    <div className={styles.visa__control}>
       <VisaAdd onAdd={onAdd} listTypeVisa={listTypeVisa} listCurrency={listCurrency} listCountry={listCountry} />
       <VisaEdit onEdit={onEdit} selectedRow={selectedRow} />
       <VisaDetail selectedRow={selectedRow}/>

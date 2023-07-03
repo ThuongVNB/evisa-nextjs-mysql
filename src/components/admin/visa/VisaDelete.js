@@ -2,6 +2,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import React from 'react'
 import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 export default function VisaDelete({onDelete, selectedRow}) {
     // console.log("selectedRow", selectedRow);
@@ -9,7 +10,12 @@ export default function VisaDelete({onDelete, selectedRow}) {
   const [open, setOpen] = useState(false);
   const handleDelete = () => {
     if(selectedRowEdit.length === 0) {
-        alert("Vui lòng chọn dữ liệu để xoá")
+      Swal.fire({
+        title: 'Thông báo!',
+        text: 'Vui lòng chọn dữ liệu để xoá',
+        icon: 'info',
+        confirmButtonText: 'Đã hiểu'
+      })
         return;
     }
     setOpen(true)
@@ -28,7 +34,7 @@ export default function VisaDelete({onDelete, selectedRow}) {
   },[selectedRow])
   return (
     <>
-    <Button onClick={handleDelete} variant="contained">Delete</Button>
+    <Button onClick={handleDelete} variant="contained">Xoá</Button>
     <Dialog
         open={open}
         onClose={handleClose}

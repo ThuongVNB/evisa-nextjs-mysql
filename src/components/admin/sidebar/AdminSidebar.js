@@ -13,6 +13,11 @@ export default function AdminSidebar() {
         title: "Visa",
         url: "/admin/dashboard/visa",
     },
+    {
+        id: 3,
+        title: "Loại Visa",
+        url: "/admin/dashboard/type_visa",
+    },
     ];
   return (
     <aside>

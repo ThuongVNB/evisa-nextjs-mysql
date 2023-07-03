@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { DataCountry } from '@/components/Home/HomeData/getCountryData';
 import { Autocomplete, Box, MenuItem, Select } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const listTypeVisa = [
   {id: 1, label: 'Tourist Visa', value: 'tourist_visa', price: '42$'},
@@ -32,7 +33,12 @@ export default function VisaDetail({selectedRow}) {
   const [selectedRowEdit, setSelectedRowEdit] = useState(selectedRow)
   const handleClickDetail = () => {
     if(selectedRowEdit.length !== 1) {
-      alert("Vui lòng chọn và chỉ chọn 1 trường dữ liệu để Chi tiết")
+      Swal.fire({
+        title: 'Thông báo!',
+        text: 'Vui lòng chọn và chỉ chọn 1 trường dữ liệu để Chi tiết',
+        icon: 'info',
+        confirmButtonText: 'Đã hiểu'
+      })
       return;
     }
     setOpen(true);
@@ -43,11 +49,6 @@ export default function VisaDetail({selectedRow}) {
     setOpen(false);
   };
 
-  const handleSubmit = (data) => {
-    e.preventDefault();
-    console.log(data);
-  }
-
   useEffect(() => {
     setSelectedRowEdit(selectedRow)
   },[selectedRow])
@@ -57,8 +58,7 @@ export default function VisaDetail({selectedRow}) {
       <Button variant="contained" onClick={handleClickDetail}>
         Chi tiết
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit}>
+      <Dialog open={open} onClose={handleClose} maxWidth={'xl'}>
         <DialogTitle>Chi tiết</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -183,9 +183,7 @@ export default function VisaDetail({selectedRow}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button type='submit'>Thêm</Button>
         </DialogActions>
-        </form>
       </Dialog>
     </div>
   );
