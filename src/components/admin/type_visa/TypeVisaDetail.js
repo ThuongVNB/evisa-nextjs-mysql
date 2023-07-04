@@ -9,17 +9,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { DataCountry } from '@/components/Home/HomeData/getCountryData';
+import { Autocomplete, Box, MenuItem, Select } from '@mui/material';
 import Swal from 'sweetalert2';
 
-
-export default function UserEdit({selectedRow, onEdit}) {
+export default function TypeVisaDetail({selectedRow}) {
   const [open, setOpen] = useState(false);
   const [selectedRowEdit, setSelectedRowEdit] = useState(selectedRow)
-  const handleClickOpen = () => {
+  const handleClickDetail = () => {
     if(selectedRowEdit.length !== 1) {
       Swal.fire({
         title: 'Thông báo!',
-        text: 'Vui lòng chọn và chỉ chọn 1 trường dữ liệu để sửa',
+        text: 'Vui lòng chọn và chỉ chọn 1 trường dữ liệu để Chi tiết',
         icon: 'info',
         confirmButtonText: 'Đã hiểu'
       })
@@ -33,31 +34,20 @@ export default function UserEdit({selectedRow, onEdit}) {
     setOpen(false);
   };
 
-  const handleSubmit = (data) => {
-    e.preventDefault();
-    console.log(data);
-  }
-
-  const handleAddUser = () => {
-    const selectedRowCopy = selectedRow;
-    onEdit(selectedRowCopy[0]);
-    setOpen(false);
-  }
-
   useEffect(() => {
     setSelectedRowEdit(selectedRow)
   },[selectedRow])
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen}>
-        Sửa
+      <Button variant="contained" onClick={handleClickDetail}>
+        Chi tiết
       </Button>
       <Dialog open={open} onClose={handleClose} maxWidth={'xl'}>
-        <DialogTitle>Sửa</DialogTitle>
+        <DialogTitle>Chi tiết</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Sửa User mới vào hệ thống. Sửa User mới vào hệ thống. Sửa User mới vào hệ thống.
+            Chi tiết TypeVisa mới vào hệ thống. Chi tiết TypeVisa mới vào hệ thống. Chi tiết TypeVisa mới vào hệ thống.
             <br/>
             <br/>
           </DialogContentText>
@@ -65,7 +55,6 @@ export default function UserEdit({selectedRow, onEdit}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={handleAddUser} type='submit'>Thêm</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import styles from './css/Module.module.css'
+import stylesSystem from '@/app/page.module.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -25,6 +25,22 @@ export default function ModuleAdd({onAdd}) {
   };
 
   const handleAddModule = () => {
+      if(1!==1) {
+        const newData = {
+          name: typeVisaCode,
+          desc: typeVisaName,
+        }
+        onAdd(newData);
+        setOpen(false);
+      } else {
+        setOpen(false)
+        Swal.fire({
+          title: 'Thông báo!',
+          text: 'Vui lòng nhập đủ thông tin',
+          icon: 'info',
+          confirmButtonText: 'Đã hiểu'
+        }).then(() => {setOpen(true)})
+      }
     console.log("handle add Module");
   }
 
@@ -39,17 +55,18 @@ export default function ModuleAdd({onAdd}) {
           <DialogContentText>
             Thêm tài khoản mới vào hệ thống. Thêm tài khoản mới vào hệ thống. Thêm tài khoản mới vào hệ thống.
           </DialogContentText>
-        
-          <TextField
-          className={styles.visa__input}
-          id="input"
-          label={'input'}
-          name="input"
-          type="text"
-          variant="outlined"
-          // value={validity}
-          // onChange={(e) => setValidity(e.target.value)}
-          />
+          <div className={stylesSystem.admin__system__form}>
+            <TextField
+            className={stylesSystem.admin__input__form}
+            id="input"
+            label={'input'}
+            name="input"
+            type="text"
+            variant="outlined"
+            // value={validity}
+            // onChange={(e) => setValidity(e.target.value)}
+            />
+          </div>
 
         </DialogContent>
         <DialogActions>

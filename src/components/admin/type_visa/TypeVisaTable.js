@@ -3,13 +3,13 @@ import stylesSystem from '@/app/page.module.css';
 import { CircularProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react'
-import { columns } from './UserModel';
-import UserAdd from './UserAdd';
-import UserEdit from './UserEdit';
-import UserDetail from './UserDetail';
-import UserDelete from './UserDelete';
+import { columns } from './TypeVisaModel';
+import TypeVisaAdd from './TypeVisaAdd';
+import TypeVisaEdit from './TypeVisaEdit';
+import TypeVisaDetail from './TypeVisaDetail';
+import TypeVisaDelete from './TypeVisaDelete';
 
-export default function UserTable() {
+export default function TypeVisaTable() {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,10 +55,10 @@ export default function UserTable() {
         />
         }
         <div className={stylesSystem.admin__table__control}>
-            <UserAdd onAdd={onAdd} />
-            <UserEdit onEdit={onEdit} selectedRow={selectedRow} />
-            <UserDetail selectedRow={selectedRow}/>
-            <UserDelete onDelete={onDelete} selectedRow={selectedRow} />  
+            <TypeVisaAdd onAdd={onAdd} />
+            <TypeVisaEdit onEdit={onEdit} selectedRow={selectedRow} />
+            <TypeVisaDetail selectedRow={selectedRow}/>
+            <TypeVisaDelete onDelete={onDelete} selectedRow={selectedRow} />  
         </div>
     </>
   )

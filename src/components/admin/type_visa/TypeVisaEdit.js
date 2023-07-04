@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 
-export default function UserEdit({selectedRow, onEdit}) {
+export default function TypeVisaEdit({selectedRow, onEdit}) {
   const [open, setOpen] = useState(false);
   const [selectedRowEdit, setSelectedRowEdit] = useState(selectedRow)
   const handleClickOpen = () => {
@@ -38,7 +38,7 @@ export default function UserEdit({selectedRow, onEdit}) {
     console.log(data);
   }
 
-  const handleAddUser = () => {
+  const handleAddTypeVisa = () => {
     const selectedRowCopy = selectedRow;
     onEdit(selectedRowCopy[0]);
     setOpen(false);
@@ -57,7 +57,7 @@ export default function UserEdit({selectedRow, onEdit}) {
         <DialogTitle>Sửa</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Sửa User mới vào hệ thống. Sửa User mới vào hệ thống. Sửa User mới vào hệ thống.
+            Sửa TypeVisa mới vào hệ thống. Sửa TypeVisa mới vào hệ thống. Sửa TypeVisa mới vào hệ thống.
             <br/>
             <br/>
           </DialogContentText>
@@ -65,7 +65,7 @@ export default function UserEdit({selectedRow, onEdit}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={handleAddUser} type='submit'>Thêm</Button>
+          <Button onClick={handleAddTypeVisa} type='submit'>Thêm</Button>
         </DialogActions>
       </Dialog>
     </div>

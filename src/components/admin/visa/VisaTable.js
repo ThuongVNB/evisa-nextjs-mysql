@@ -45,8 +45,8 @@ export default function VisaTable() {
     }, []);
 
     useEffect(() => {
-    console.log("status", status);
-    console.log("session", session);
+      console.log("status", status);
+      console.log("session", session);
     },[status])
 
     const handleSelectRow = (list) => {

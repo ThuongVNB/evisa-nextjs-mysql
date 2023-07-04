@@ -48,3 +48,12 @@
   margin-top: 8px;
 }
 
+.admin__input__form {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.admin__system__form {
+  margin-top: 12px;
+}
+

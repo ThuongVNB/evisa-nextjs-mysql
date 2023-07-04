@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import stylesSystem from '@/app/page.module.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -7,9 +8,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useState } from 'react';
+import { Autocomplete, MenuItem} from '@mui/material';
+import Swal from 'sweetalert2';
 
-export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
+
+export default function UserAdd({onAdd}) {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,55 +24,56 @@ export default function FormDialog() {
     setOpen(false);
   };
 
+  const handleAddUser = () => {
+      if(1!==1) {
+        const newData = {
+          name: typeVisaCode,
+          desc: typeVisaName,
+        }
+        onAdd(newData);
+        setOpen(false);
+      } else {
+        setOpen(false)
+        Swal.fire({
+          title: 'Thông báo!',
+          text: 'Vui lòng nhập đủ thông tin',
+          icon: 'info',
+          confirmButtonText: 'Đã hiểu'
+        }).then(() => {setOpen(true)})
+      }
+    console.log("handle add User");
+  }
+
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+    <>
+      <Button variant="contained" onClick={handleClickOpen}>
         Thêm
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} maxWidth={'xl'}>
         <DialogTitle>Thêm User mới</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Thêm tài khoản mới vào hệ thống. Thêm tài khoản mới vào hệ thống. Thêm tài khoản mới vào hệ thống.
           </DialogContentText>
-          <TextField
-            margin="dense"
-            id="first_name"
-            label="First name"
+          <div className={stylesSystem.admin__system__form}>
+            <TextField
+            className={stylesSystem.admin__input__form}
+            id="input"
+            label={'input'}
+            name="input"
             type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="last_name"
-            label="Last name"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            margin="dense"
-            id="avatar"
-            label="Avatar"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
+            variant="outlined"
+            // value={validity}
+            // onChange={(e) => setValidity(e.target.value)}
+            />
+          </div>
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={handleClose}>Thêm</Button>
+          <Button onClick={handleAddUser}>Thêm</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
