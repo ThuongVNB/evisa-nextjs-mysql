@@ -42,3 +42,9 @@
   font-weight: 300;
 }
 
+.admin__table__control {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+

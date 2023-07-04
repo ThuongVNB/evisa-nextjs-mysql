@@ -11,6 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState } from 'react';
 import { Autocomplete, MenuItem} from '@mui/material';
 import Swal from 'sweetalert2';
+import { useSession } from 'next-auth/react';
 
 
 export default function VisaAdd({onAdd, listTypeVisa, listCurrency, listCountry}) {
@@ -50,24 +51,7 @@ export default function VisaAdd({onAdd, listTypeVisa, listCurrency, listCountry}
         currency: currencyObject.code,
         published: published
       }
-      const token = '12312321312'
-      // fetching api;
-      async function addVisaAPI() {
-        try {
-          const fetching = await fetch('http://localhost:3000/api/visa_country_detail', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-              },
-              body: JSON.stringify(newData)
-            })
-        } catch (error) {
-          throw error;
-        }
-      }
-      addVisaAPI();
-      // onAdd(newData);
+      onAdd(newData);
       setOpen(false);
     } else {
       Swal.fire({

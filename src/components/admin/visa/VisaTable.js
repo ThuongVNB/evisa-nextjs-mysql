@@ -1,5 +1,5 @@
 "use client";
-import styles from './Css/Visa.module.css'
+import stylesSystem from '@/app/page.module.css';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import VisaEdit from './VisaEdit';
@@ -21,7 +21,7 @@ export default function VisaTable() {
     const [listCurrency, setListCurrency] = useState([]);
     const [listCountry, setListCountry] = useState([])
     const [listTypeVisa, setListTypeVisa] = useState([]);
-
+    const { data: session, status } = useSession()
     async function getAllData() {
     try {
       setLoading(false)
@@ -44,6 +44,11 @@ export default function VisaTable() {
       setData(rows)
     }, []);
 
+    useEffect(() => {
+    console.log("status", status);
+    console.log("session", session);
+    },[status])
+
     const handleSelectRow = (list) => {
       let listrowSelected = [];
       list.map((item, index) => {
@@ -55,20 +60,18 @@ export default function VisaTable() {
     }
 
     const onAdd = async (newData) => {
-      const response = await fetch('http://localhost:3000/api/visas', {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, *cors, same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: "follow", // manual, *follow, error
-        referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(newData), // body data type must match "Content-Type" header
-      });
-      console.log("response", response)
+      // const response = await fetch('http://localhost:3000/api/visas', {
+      //   method: "POST",
+      //   mode: "cors",
+      //   cache: "no-cache",
+      //   credentials: "same-origin",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   redirect: "follow",
+      //   referrerPolicy: "no-referrer",
+      //   body: JSON.stringify(newData),
+      // });
       return;
       const dataCurrent = [...data];
       const checkExisted = dataCurrent.findIndex((item) => item.id === newData.id)
@@ -114,7 +117,7 @@ export default function VisaTable() {
         checkboxSelection
       />
     }
-    <div className={styles.visa__control}>
+    <div className={stylesSystem.admin__table__control}>
       <VisaAdd onAdd={onAdd} listTypeVisa={listTypeVisa} listCurrency={listCurrency} listCountry={listCountry} />
       <VisaEdit onEdit={onEdit} selectedRow={selectedRow} />
       <VisaDetail selectedRow={selectedRow}/>

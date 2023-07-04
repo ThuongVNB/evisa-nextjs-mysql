@@ -18,6 +18,11 @@ export default function AdminSidebar() {
         title: "Loại Visa",
         url: "/admin/dashboard/type_visa",
     },
+    {
+        id: 4,
+        title: "Module name sample",
+        url: "/admin/dashboard/module_name",
+    },
     ];
   return (
     <aside>
